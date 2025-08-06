@@ -71,7 +71,7 @@ io.on('connection', (socket) => {
       if (!u.isObserver) delete u.card;
     });
     io.emit('updateUsers', users);
-    io.emit('resetCards', false);
+    io.emit('resetCards');
   });
 
   socket.on('disconnect', () => {
