@@ -40,6 +40,7 @@ const io = new Server(server, {
 });
 
 let users = [];
+let isRevailed = false;
 
 io.on('connection', (socket) => {
   console.log(`🔌 Usuário conectado: ${socket.id}`);
@@ -63,10 +64,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('reveal', () => {
+    isRevailed = true;
     io.emit('revealCards');
   });
 
   socket.on('reset', () => {
+    isRevailed = false;
     users.forEach(u => {
       if (!u.isObserver) delete u.card;
     });
@@ -79,6 +82,11 @@ io.on('connection', (socket) => {
     io.emit('updateUsers', users);
     console.log(`❌ Usuário desconectado: ${socket.id}`);
   });
+
+  socket.on('init', () => {
+    socket.emit('init', isRevailed);
+  });
+
 });
 
 server.listen(3000, () => {
