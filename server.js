@@ -6,6 +6,32 @@ const { Server } = require('socket.io');
 const app = express();
 app.use(cors());
 
+// ROTA VISUAL PARA TESTE NO NAVEGADOR
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <title>Planning Poker API</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin-top: 100px;
+          }
+          h1 {
+            color: green;
+          }
+        </style>
+      </head>
+      <body>
+        <h1>🟢 Planning Poker API está rodando!</h1>
+        <p>Socket.IO está escutando por conexões em tempo real.</p>
+      </body>
+    </html>
+  `);
+});
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
