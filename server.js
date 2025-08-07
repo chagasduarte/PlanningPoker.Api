@@ -87,6 +87,10 @@ io.on('connection', (socket) => {
     socket.emit('init', isRevailed);
   });
 
+  socket.on('throwBall', (ball) => {
+    io.emit('throwBall', ball);
+  });
+  
 });
 
 server.listen(3000, () => {
