@@ -49,14 +49,11 @@ io.on('connection', (socket) => {
     user.id = socket.id;
     users.push(user);
     socket.emit('userInfo', user);
-    console.log(user);
     io.emit('updateUsers', users);
   });
 
   socket.on('vote', ({ id, card }) => {
     const user = users.find(u => u.id === id);
-    console.log(users);
-    console.log(id)
     if (user && user.role == 'voter') {
       user.card = card;
       io.emit('updateUsers', users);
@@ -88,6 +85,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('throwBall', (ball) => {
+    console.log(ball);
     io.emit('throwBall', ball);
   });
   
