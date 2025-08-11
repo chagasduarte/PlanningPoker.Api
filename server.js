@@ -73,6 +73,14 @@ io.on('connection', (socket) => {
     io.emit('updateUsers', users);
     io.emit('resetCards');
   });
+  
+  socket.on('init', () => {
+    socket.emit('init', isRevailed);
+  });
+
+  socket.on('throwBall', (ball) => {
+    io.emit('throwBalls', ball);
+  });
 
   socket.on('disconnect', () => {
     users = users.filter(u => u.id !== socket.id);
@@ -80,15 +88,6 @@ io.on('connection', (socket) => {
     console.log(`❌ Usuário desconectado: ${socket.id}`);
   });
 
-  socket.on('init', () => {
-    socket.emit('init', isRevailed);
-  });
-
-  socket.on('throwBall', (ball) => {
-    console.log(ball);
-    io.emit('throwBall', ball);
-  });
-  
 });
 
 server.listen(3000, () => {
